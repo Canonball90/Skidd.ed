@@ -14,10 +14,10 @@ import java.awt.*;
 public class ClickGui extends Module {
     static ClickGui INSTANCE = new ClickGui();
     public BooleanSetting frameGradient = new BooleanSetting("Frame Gradient", false, this);
-    public ColorSetting color = new ColorSetting("Color", new Color(255, 255, 255, 255), this, v -> !frameGradient.getValue());
+    public ColorSetting color = new ColorSetting("Color", new Color(255, 0, 106, 255), this, v -> !frameGradient.getValue());
     public ColorSetting backgroundColor = new ColorSetting("Background Color", new Color(0, 0, 0, 50), this);
     public IntegerSetting integerSetting = new IntegerSetting("I", 100, 0, 500, this);
-    public ColorSetting gColor1 = new ColorSetting("Gradient 1", new Color(255, 255, 255, 255), this, v -> frameGradient.getValue());
+    public ColorSetting gColor1 = new ColorSetting("Gradient 1", new Color(246, 0, 0, 255), this, v -> frameGradient.getValue());
     public ColorSetting gColor2 = new ColorSetting("Gradient 2", new Color(255, 255, 255, 255), this, v -> frameGradient.getValue());
     @Override
     public void initializeModule() {
