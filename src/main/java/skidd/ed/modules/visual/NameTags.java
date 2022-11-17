@@ -27,13 +27,13 @@ import skidd.ed.utils.RenderUtil;
  * Skidded from (https://github.com/rlybasic/Bobr_Client_leak/blob/main/ru/internali/module/render/NameTags.java)
  * I just added some settings and shit.
  */
-//ToDo: Fix enchantment rendering
 @ModuleInfo(name = "NameTags", description = "Shows the name of players through walls", category = Module.Category.Visual)
 public class NameTags extends Module {
 
     BooleanSetting armor = new BooleanSetting("Armor", true, this);
     BooleanSetting items = new BooleanSetting("Items", true, this);
     BooleanSetting heart = new BooleanSetting("Heart", false, this);
+    BooleanSetting enchant = new BooleanSetting("Enchantments", false, this);
     BooleanSetting background = new BooleanSetting("Background", true, this);
     ColorSetting backGroundColor = new ColorSetting("Background Color", new Color(0, 0, 0, 181), this, v -> background.getValue());
     BooleanSetting outline = new BooleanSetting("Outline", true, this);
@@ -72,11 +72,13 @@ public class NameTags extends Module {
                     NameTags.mc.getRenderItem().zLevel = 0.0f;
                     int posY = -30;
                     Map enchantments = EnchantmentHelper.getEnchantments((ItemStack) ((EntityPlayer) e).inventory.getCurrentItem());
-//                for (Enchantment enchantment : enchantments.keySet()) {
-//                    int level = EnchantmentHelper.getEnchantmentLevel((Enchantment)enchantment, (ItemStack)((EntityPlayer)e).inventory.getCurrentItem());
-//                    NameTags.mc.fontRenderer.drawStringWithShadow(String.valueOf(enchantment.getName().substring(12).charAt(0)).toUpperCase() + level, (float)(posX + 6 - this.getcenter(String.valueOf(enchantment.getName().substring(12).charAt(0)).toUpperCase() + level)), (float)posY, -1);
-//                    posY -= 12;
-//                }
+                for (Object enchantment : enchantments.keySet()) {
+                    if(enchant.getValue()) {
+                        int level = EnchantmentHelper.getEnchantmentLevel((Enchantment) enchantment, (ItemStack) ((EntityPlayer) e).inventory.getCurrentItem());
+                        NameTags.mc.fontRenderer.drawStringWithShadow(String.valueOf(((Enchantment) enchantment).getName().substring(12).charAt(0)).toUpperCase() + level, (float) (posX + 6 - this.getcenter(String.valueOf(((Enchantment) enchantment).getName().substring(12).charAt(0)).toUpperCase() + level)), (float) posY, -1);
+                        posY -= 12;
+                    }
+                }
                     posX += 15;
                 }
             }
@@ -87,11 +89,13 @@ public class NameTags extends Module {
                     NameTags.mc.getRenderItem().zLevel = 0.0f;
                     int posY = -30;
                     Map enchantments = EnchantmentHelper.getEnchantments((ItemStack) item);
-//                for (Enchantment enchantment : enchantments.keySet()) {
-//                    int level = EnchantmentHelper.getEnchantmentLevel((Enchantment)enchantment, (ItemStack)item);
-//                    NameTags.mc.fontRenderer.drawStringWithShadow(String.valueOf(enchantment.getName().substring(12).charAt(0)).toUpperCase() + level, (float)(posX + 9 - this.getcenter(enchantment.getName().substring(12).charAt(0) + level)), (float)posY, -1);
-//                    posY -= 12;
-//                }
+                for (Object enchantment : enchantments.keySet()) {
+                    if(enchant.getValue()) {
+                        int level = EnchantmentHelper.getEnchantmentLevel((Enchantment) enchantment, (ItemStack) item);
+                        NameTags.mc.fontRenderer.drawStringWithShadow(String.valueOf(((Enchantment) enchantment).getName().substring(12).charAt(0)).toUpperCase() + level, (float) (posX + 9 - this.getcenter(((Enchantment) enchantment).getName().substring(12).charAt(0) + level)), (float) posY, -1);
+                        posY -= 12;
+                    }
+                }
                     posX += 17;
                 }
             }
