@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "skidded",
+    "name": "Skidded",
+    "description": "Skidded is a mod that adds skidding to Minecraft.",
+    "version": "",
+    "mcversion": "",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "CanonBall90"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
