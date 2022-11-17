@@ -22,7 +22,11 @@ public class BooleanButton extends Button {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         RenderUtil.drawRect(x - 2, y, x + width + 2, y + height, ClickGui.getInstance().backgroundColor.getColor().getRGB());
         if ((boolean) setting.getValue())
-            RenderUtil.drawRect(x, y, x + width, y + height, ClickGui.getInstance().color.getColor().getRGB());
+            if(ClickGui.getInstance().frameGradient.getValue()){
+                RenderUtil.drawGradientSideways(x, y, x + width, y + height, ClickGui.getInstance().gColor1.getValue().getRGB(), ClickGui.getInstance().gColor2.getValue().getRGB());
+            }else {
+                RenderUtil.drawRect(x, y, x + width, y + height, ClickGui.getInstance().color.getColor().getRGB());
+            }
 
         if (isInside(mouseX, mouseY))
             RenderUtil.drawRect(x, y, x + width, y + height, new Color(0, 0, 0, 100).getRGB());

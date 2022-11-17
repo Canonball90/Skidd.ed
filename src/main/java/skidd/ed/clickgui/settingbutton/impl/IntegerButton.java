@@ -27,8 +27,13 @@ public class IntegerButton extends Button {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         dragSlider(mouseX, mouseY);
-        RenderUtil.drawRect(x - 2, y, x + width + 2, y + height, ClickGui.getInstance().backgroundColor.getColor().getRGB());
-        RenderUtil.drawRect(x, y, ((Number) integerSetting.getValue()).floatValue() <= integerSetting.getMinimum() ? x : x + ((float) width + 2f) * ((((Number) integerSetting.getValue()).floatValue() - integerSetting.getMinimum()) / (integerSetting.getMaximum() - integerSetting.getMinimum())) - 2, y + (float) height, ClickGui.getInstance().color.getColor().getRGB());
+        if(ClickGui.getInstance().frameGradient.getValue()){
+            RenderUtil.drawRect(x - 2, y, x + width + 2, y + height, ClickGui.getInstance().backgroundColor.getColor().getRGB());
+            RenderUtil.drawGradientSideways(x, y, ((Number) integerSetting.getValue()).intValue() <= integerSetting.getMinimum() ? x : x + ((float) width + 2f) * ((((Number) integerSetting.getValue()).intValue() - integerSetting.getMinimum()) / (float) (integerSetting.getMaximum() - integerSetting.getMinimum())) - 2, y + (float) height, ClickGui.getInstance().gColor1.getColor().getRGB(), ClickGui.getInstance().gColor2.getColor().getRGB());
+        }else {
+            RenderUtil.drawRect(x - 2, y, x + width + 2, y + height, ClickGui.getInstance().backgroundColor.getColor().getRGB());
+            RenderUtil.drawRect(x, y, ((Number) integerSetting.getValue()).floatValue() <= integerSetting.getMinimum() ? x : x + ((float) width + 2f) * ((((Number) integerSetting.getValue()).floatValue() - integerSetting.getMinimum()) / (integerSetting.getMaximum() - integerSetting.getMinimum())) - 2, y + (float) height, ClickGui.getInstance().color.getColor().getRGB());
+        }
         if (isInside(mouseX, mouseY))
             RenderUtil.drawRect(x, y, x + width, y + height, new Color(0, 0, 0, 100).getRGB());
         Skidded.mc.fontRenderer.drawStringWithShadow(integerSetting.getName() + " " + ChatFormatting.GRAY + integerSetting.getValue(), x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);

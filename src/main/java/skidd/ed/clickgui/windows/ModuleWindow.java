@@ -65,7 +65,11 @@ public class ModuleWindow {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         RenderUtil.drawRect(x, y, x + width, y + height, ClickGui.getInstance().backgroundColor.getColor().getRGB());
         if (module.isEnabled())
-            RenderUtil.drawRect(x + 1, y, x + width - 1, y + height, enabledColor.getRGB());
+            if(ClickGui.getInstance().frameGradient.getValue()){
+                RenderUtil.drawGradientSideways(x + 1, y, x + width - 1, y + height, ClickGui.getInstance().gColor1.getValue().getRGB(), ClickGui.getInstance().gColor2.getValue().getRGB());
+            }else {
+                RenderUtil.drawRect(x + 1, y, x + width - 1, y + height, enabledColor.getRGB());
+            }
         if (isInside(mouseX, mouseY))
             RenderUtil.drawRect(x + 1, y, x + width - 1, y + height, new Color(0, 0, 0, 100).getRGB());
         Skidded.mc.fontRenderer.drawStringWithShadow(name, isInside(mouseX, mouseY) ? x + 3 : x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
@@ -88,7 +92,7 @@ public class ModuleWindow {
                             y += ((EnumButton) button).enumSetting.getModes().size() * 10;
                 }
             }
-            RenderUtil.drawOutlineRect(x + 2, this.y + height, x + width - 2, y + height - 1, ClickGui.getInstance().color.getColor(), 1f);
+            if(ClickGui.getInstance().frameGradient.getValue()){}else RenderUtil.drawOutlineRect(x + 2, this.y + height, x + width - 2, y + height - 1, ClickGui.getInstance().color.getColor(), 1f);
         }
     }
 

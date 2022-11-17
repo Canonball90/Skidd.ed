@@ -33,7 +33,11 @@ public class DoubleButton extends Button {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         dragSlider(mouseX, mouseY);
         RenderUtil.drawRect(x - 2, y, x + width + 2, y + height, ClickGui.getInstance().backgroundColor.getColor().getRGB());
-        RenderUtil.drawRect(x, y, ((Number) doubleSetting.getValue()).doubleValue() <= doubleSetting.getMinimum() ? x : (float) (x + ((float) width + 2f) * ((((Number) doubleSetting.getValue()).doubleValue() - doubleSetting.getMinimum()) / (doubleSetting.getMaximum() - doubleSetting.getMinimum())) - 2), y + (float) height, ClickGui.getInstance().color.getColor().getRGB());
+        if(ClickGui.getInstance().frameGradient.getValue()) {
+            RenderUtil.drawGradientSideways(x, y, ((Number) doubleSetting.getValue()).intValue() <= doubleSetting.getMinimum() ? x : x + ((float) width + 2f) * ((((Number) doubleSetting.getValue()).intValue() - doubleSetting.getMinimum()) / (float) (doubleSetting.getMaximum() - doubleSetting.getMinimum())) - 2, y + (float) height, ClickGui.getInstance().gColor1.getColor().getRGB(), ClickGui.getInstance().gColor2.getColor().getRGB());
+        }else{
+            RenderUtil.drawRect(x, y, ((Number) doubleSetting.getValue()).doubleValue() <= doubleSetting.getMinimum() ? x : (float) (x + ((float) width + 2f) * ((((Number) doubleSetting.getValue()).doubleValue() - doubleSetting.getMinimum()) / (doubleSetting.getMaximum() - doubleSetting.getMinimum())) - 2), y + (float) height, ClickGui.getInstance().color.getColor().getRGB());
+        }
         if (isInside(mouseX, mouseY))
             RenderUtil.drawRect(x, y, x + width, y + height, new Color(0, 0, 0, 100).getRGB());
         Skidded.mc.fontRenderer.drawStringWithShadow(doubleSetting.getName() + " " + ChatFormatting.GRAY + roundNumber(doubleSetting.getValue(), 2), x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);

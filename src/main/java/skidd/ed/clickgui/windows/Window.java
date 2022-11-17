@@ -47,7 +47,11 @@ public class Window {
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         dragScreen(mouseX, mouseY);
-        RenderUtil.drawRect(x - 1, y, x + width + 1, y + height, ClickGui.getInstance().color.getColor().getRGB());
+        if(ClickGui.getInstance().frameGradient.getValue()){
+            RenderUtil.drawGradientSideways(x - 1, y, x + width + 1, y + height, ClickGui.getInstance().gColor1.getValue().getRGB(), ClickGui.getInstance().gColor2.getValue().getRGB());
+        }else {
+            RenderUtil.drawRect(x - 1, y, x + width + 1, y + height, ClickGui.getInstance().color.getColor().getRGB());
+        }
         Skidded.mc.fontRenderer.drawStringWithShadow(name, x + (width / 2f) - (Skidded.mc.fontRenderer.getStringWidth(name) / 2f), y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
         if (isOpened) {
             modules.clear();
@@ -78,9 +82,13 @@ public class Window {
                 modules.add(new ModuleWindow(module.getName(), x, y += height, width, height, ClickGui.getInstance().backgroundColor.getColor(), ClickGui.getInstance().color.getColor(), module));
                 y += openedHeight;
             }
-            RenderUtil.drawOutlineRect(x, this.y + height, x + width, y + height, ClickGui.getInstance().color.getColor(), 1.5f);
+            if(!ClickGui.getInstance().frameGradient.getValue()) {
+                RenderUtil.drawOutlineRect(x, this.y + height, x + width, y + height, ClickGui.getInstance().color.getColor(), 1.5f);
+            }
         }
-        RenderUtil.drawOutlineRect(x, this.y, x + width, this.y + height, ClickGui.getInstance().color.getColor(), 1.5f);
+        if(!ClickGui.getInstance().frameGradient.getValue()) {
+            RenderUtil.drawOutlineRect(x, this.y, x + width, this.y + height, ClickGui.getInstance().color.getColor(), 1.5f);
+        }
         if (isOpened)
             modules.forEach(modules -> modules.drawScreen(mouseX, mouseY, partialTicks));
     }

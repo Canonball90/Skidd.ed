@@ -10,7 +10,7 @@ import java.util.UUID;
 @ModuleInfo(name = "Fake Player", category = Module.Category.Misc, description = "Spawns fake entity")
 public class FakePlayer extends Module {
     EntityOtherPlayerMP fake_player;
-
+//ToDo fix crash when the player disconnects
     @Override
     public void onEnable() {
         if (mc.world == null || mc.player == null)
