@@ -4,6 +4,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import skidd.ed.Skidded;
 import skidd.ed.clickgui.settingbutton.Button;
 import skidd.ed.modules.core.ClickGui;
+import skidd.ed.modules.core.CustomFont;
 import skidd.ed.settings.Setting;
 import skidd.ed.settings.impl.StringSetting;
 import skidd.ed.utils.RenderUtil;
@@ -28,8 +29,11 @@ public class StringButton extends Button {
         RenderUtil.drawRect(x - 2, y, x + width + 2, y + height, ClickGui.getInstance().backgroundColor.getColor().getRGB());
         if (isInside(mouseX, mouseY))
             RenderUtil.drawRect(x, y, x + width, y + height, new Color(0, 0, 0, 100).getRGB());
-        Skidded.mc.fontRenderer.drawStringWithShadow(stringSetting.isOpen() ? stringSetting.getName() + " " + ChatFormatting.GRAY + stringSetting.getValue() + "..." : stringSetting.getName() + " " + ChatFormatting.GRAY + stringSetting.getValue(), x + 2, y, -1);
-
+        if(CustomFont.INSTANCE.isEnabled()){
+            Skidded.customFontRenderer.drawStringWithShadow(stringSetting.isOpen() ? stringSetting.getName() + " " + ChatFormatting.GRAY + stringSetting.getValue() + "..." : stringSetting.getName() + " " + ChatFormatting.GRAY + stringSetting.getValue(), x + 2, y, -1);
+        }else {
+            Skidded.mc.fontRenderer.drawStringWithShadow(stringSetting.isOpen() ? stringSetting.getName() + " " + ChatFormatting.GRAY + stringSetting.getValue() + "..." : stringSetting.getName() + " " + ChatFormatting.GRAY + stringSetting.getValue(), x + 2, y, -1);
+        }
     }
 
     @Override

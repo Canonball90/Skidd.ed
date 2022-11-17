@@ -2,6 +2,7 @@ package skidd.ed.hud;
 
 import skidd.ed.Skidded;
 import skidd.ed.modules.core.ClickGui;
+import skidd.ed.modules.core.CustomFont;
 import skidd.ed.utils.RenderUtil;
 
 public class HudModule {
@@ -21,7 +22,11 @@ public class HudModule {
 
     public void drawScreen() {
         RenderUtil.drawRect(x, y, x + w, y + h,value ? ClickGui.getInstance().color.getColor().getRGB() : ClickGui.getInstance().backgroundColor.getColor().getRGB());
-        Skidded.mc.fontRenderer.drawStringWithShadow(name, x, y, -1);
+        if(CustomFont.INSTANCE.isEnabled()){
+            Skidded.customFontRenderer.drawStringWithShadow(name, x, y, -1);
+        }else {
+            Skidded.mc.fontRenderer.drawStringWithShadow(name, x, y, -1);
+        }
     }
 
     public void render(int mouseX, int mouseY, float partialTicks) {

@@ -4,6 +4,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import skidd.ed.Skidded;
 import skidd.ed.clickgui.settingbutton.Button;
 import skidd.ed.modules.core.ClickGui;
+import skidd.ed.modules.core.CustomFont;
 import skidd.ed.settings.Setting;
 import skidd.ed.settings.impl.KeySetting;
 import skidd.ed.utils.RenderUtil;
@@ -26,7 +27,11 @@ public class KeyButton extends Button {
         RenderUtil.drawRect(x - 2, y, x + width + 2, y + height, ClickGui.getInstance().backgroundColor.getColor().getRGB());
         if (isInside(mouseX, mouseY))
             RenderUtil.drawRect(x, y, x + width, y + height, new Color(0, 0, 0, 100).getRGB());
-        Skidded.mc.fontRenderer.drawStringWithShadow(keySetting.isTyping ? keySetting.getName() + " ..." : keySetting.getName() + " " + ChatFormatting.GRAY + (keySetting.getKey() == -1 ? "None" : Keyboard.getKeyName(keySetting.getKey())), x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        if(CustomFont.INSTANCE.isEnabled()){
+            Skidded.customFontRenderer.drawStringWithShadow(keySetting.isTyping ? keySetting.getName() + " ..." : keySetting.getName() + " " + ChatFormatting.GRAY + (keySetting.getKey() == -1 ? "None" : Keyboard.getKeyName(keySetting.getKey())), x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        }else {
+            Skidded.mc.fontRenderer.drawStringWithShadow(keySetting.isTyping ? keySetting.getName() + " ..." : keySetting.getName() + " " + ChatFormatting.GRAY + (keySetting.getKey() == -1 ? "None" : Keyboard.getKeyName(keySetting.getKey())), x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        }
     }
 
     @Override

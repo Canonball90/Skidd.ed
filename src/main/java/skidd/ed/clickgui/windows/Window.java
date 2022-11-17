@@ -3,6 +3,7 @@ package skidd.ed.clickgui.windows;
 import skidd.ed.Skidded;
 import skidd.ed.modules.Module;
 import skidd.ed.modules.core.ClickGui;
+import skidd.ed.modules.core.CustomFont;
 import skidd.ed.settings.Setting;
 import skidd.ed.settings.impl.ColorSetting;
 import skidd.ed.settings.impl.EnumSetting;
@@ -52,7 +53,11 @@ public class Window {
         }else {
             RenderUtil.drawRect(x - 1, y, x + width + 1, y + height, ClickGui.getInstance().color.getColor().getRGB());
         }
-        Skidded.mc.fontRenderer.drawStringWithShadow(name, x + (width / 2f) - (Skidded.mc.fontRenderer.getStringWidth(name) / 2f), y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        if(CustomFont.INSTANCE.isEnabled()){
+            Skidded.customFontRenderer.drawStringWithShadow(name, x + (width / 2f) - (Skidded.mc.fontRenderer.getStringWidth(name) / 2f), y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        }else {
+            Skidded.mc.fontRenderer.drawStringWithShadow(name, x + (width / 2f) - (Skidded.mc.fontRenderer.getStringWidth(name) / 2f), y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        }
         if (isOpened) {
             modules.clear();
             int y = this.y;

@@ -18,8 +18,10 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
+import skidd.ed.Skidded;
 import skidd.ed.modules.Module;
 import skidd.ed.modules.ModuleInfo;
+import skidd.ed.modules.core.CustomFont;
 import skidd.ed.settings.impl.*;
 import skidd.ed.utils.RenderUtil;
 
@@ -63,7 +65,11 @@ public class NameTags extends Module {
             int health = (int)(((EntityPlayer)e).getHealth() / ((EntityPlayer)e).getMaxHealth() * 100.0f);
             if(background.getValue()) {Gui.drawRect((int) (-NameTags.mc.fontRenderer.getStringWidth(e.getName() + " " + health + "%") / 2 - 2), (int) -2, (int) (NameTags.mc.fontRenderer.getStringWidth(e.getName()) / 2 + 16), (int) 10, backGroundColor.getColor().getRGB());}
             if(outline.getValue()){RenderUtil.drawOutlineRect((int)(-NameTags.mc.fontRenderer.getStringWidth(e.getName() + " " + health + "%") / 2 - 2), (int)-2, (int)(NameTags.mc.fontRenderer.getStringWidth(e.getName()) / 2 + 16), (int)10, outlineColor.getColor(), outlineWidth.getValue());}
-            NameTags.mc.fontRenderer.drawString(e.getName() + " " + (Object)TextFormatting.GREEN + health + (heart.getValue() ? "\u2764" : "%"), 0 - this.getcenter(e.getName() + " " + (Object)TextFormatting.GREEN + health + "%"), 1, -1);
+            if(CustomFont.INSTANCE.isEnabled()){
+                Skidded.customFontRenderer.drawString(e.getName() + " " + (Object) TextFormatting.GREEN + health + (heart.getValue() ? "\u2764" : "%"), 0 - this.getcenter(e.getName() + " " + (Object) TextFormatting.GREEN + health + "%"), 1, -1);
+            }else {
+                NameTags.mc.fontRenderer.drawString(e.getName() + " " + (Object) TextFormatting.GREEN + health + (heart.getValue() ? "\u2764" : "%"), 0 - this.getcenter(e.getName() + " " + (Object) TextFormatting.GREEN + health + "%"), 1, -1);
+            }
             int posX = -NameTags.mc.fontRenderer.getStringWidth(e.getName()) / 2 - 8;
             if(items.getValue()) {
                 if (Item.getIdFromItem((Item) ((EntityPlayer) e).inventory.getCurrentItem().getItem()) != 0) {

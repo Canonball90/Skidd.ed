@@ -1,6 +1,7 @@
 package skidd.ed.hud;
 import skidd.ed.Skidded;
 import skidd.ed.modules.core.ClickGui;
+import skidd.ed.modules.core.CustomFont;
 import skidd.ed.utils.RenderUtil;
 import net.minecraft.client.gui.GuiScreen;
 
@@ -50,14 +51,22 @@ public class HudWindow extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         dragScreen(mouseX, mouseY);
         RenderUtil.drawRect(x, y, x + w, y + h, ClickGui.getInstance().color.getColor().getRGB());
-        Skidded.mc.fontRenderer.drawStringWithShadow("Hud Editor", x + (w / 2f) - (Skidded.mc.fontRenderer.getStringWidth("Hud Editor") / 2f), y + (h / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        if(CustomFont.INSTANCE.isEnabled()) {
+            Skidded.customFontRenderer.drawStringWithShadow("Hud Editor", x + (w / 2f) - (Skidded.mc.fontRenderer.getStringWidth("Hud Editor") / 2f), y + (h / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        }else{
+            Skidded.mc.fontRenderer.drawStringWithShadow("Hud Editor", x + (w / 2f) - (Skidded.mc.fontRenderer.getStringWidth("Hud Editor") / 2f), y + (h / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        }
         if (isInsideCloseButton(mouseX, mouseY))
             RenderUtil.drawRect(x + w - Skidded.mc.fontRenderer.getStringWidth("x") - 4, y, x + w, y + h, new Color(0, 0, 0, 100).getRGB());
         Skidded.mc.fontRenderer.drawStringWithShadow("x", x + w - Skidded.mc.fontRenderer.getStringWidth("x") - 2, y + (h / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
 
         if (isInsideCloseButton(mouseX, mouseY)) {
             RenderUtil.drawRect(mouseX + 5, mouseY, mouseX + 5 + Skidded.mc.fontRenderer.getStringWidth("Left Click: Close | Right Click: Return"), mouseY + 10, new Color(0, 0, 0, 100).getRGB());
-            Skidded.mc.fontRenderer.drawStringWithShadow("Left Click: Close | Right Click: Return", mouseX + 5, mouseY + 1, -1);
+            if(CustomFont.INSTANCE.isEnabled()){
+                Skidded.customFontRenderer.drawStringWithShadow("Left Click: Close | Right Click: Return", mouseX + 5, mouseY + 1, -1);
+            }else{
+                Skidded.mc.fontRenderer.drawStringWithShadow("Left Click: Close | Right Click: Return", mouseX + 5, mouseY + 1, -1);
+            }
         }
         int yIncrease = y;
         for (HudModule hudModule : hudModules) {

@@ -5,6 +5,7 @@ import skidd.ed.clickgui.settingbutton.Button;
 import skidd.ed.clickgui.settingbutton.impl.*;
 import skidd.ed.modules.Module;
 import skidd.ed.modules.core.ClickGui;
+import skidd.ed.modules.core.CustomFont;
 import skidd.ed.settings.Setting;
 import skidd.ed.settings.impl.*;
 import skidd.ed.utils.RenderUtil;
@@ -72,7 +73,11 @@ public class ModuleWindow {
             }
         if (isInside(mouseX, mouseY))
             RenderUtil.drawRect(x + 1, y, x + width - 1, y + height, new Color(0, 0, 0, 100).getRGB());
-        Skidded.mc.fontRenderer.drawStringWithShadow(name, isInside(mouseX, mouseY) ? x + 3 : x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        if(CustomFont.INSTANCE.isEnabled()){
+            Skidded.customFontRenderer.drawStringWithShadow(name, isInside(mouseX, mouseY) ? x + 3 : x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        }else {
+            Skidded.mc.fontRenderer.drawStringWithShadow(name, isInside(mouseX, mouseY) ? x + 3 : x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        }
         if (module.isOpened) {
             int y = this.y;
             for (Button button : newButton) {

@@ -3,6 +3,7 @@ package skidd.ed.clickgui.settingbutton.impl;
 import skidd.ed.Skidded;
 import skidd.ed.clickgui.settingbutton.Button;
 import skidd.ed.modules.core.ClickGui;
+import skidd.ed.modules.core.CustomFont;
 import skidd.ed.settings.Setting;
 import skidd.ed.utils.RenderUtil;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -30,7 +31,11 @@ public class BooleanButton extends Button {
 
         if (isInside(mouseX, mouseY))
             RenderUtil.drawRect(x, y, x + width, y + height, new Color(0, 0, 0, 100).getRGB());
-        Skidded.mc.fontRenderer.drawStringWithShadow(setting.getName(), x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        if(CustomFont.INSTANCE.isEnabled()){
+            Skidded.customFontRenderer.drawStringWithShadow(setting.getName(), x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        }else {
+            Skidded.mc.fontRenderer.drawStringWithShadow(setting.getName(), x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        }
     }
 
     @Override

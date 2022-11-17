@@ -8,6 +8,9 @@ import skidd.ed.modules.ModuleInitializer;
 import skidd.ed.settings.SettingInitializer;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.Display;
+import skidd.ed.utils.font.CustomFontRenderer;
+
+import java.awt.*;
 
 public class Skidded {
     public static Minecraft mc = Minecraft.getMinecraft();
@@ -19,6 +22,7 @@ public class Skidded {
     public static SettingInitializer settingInitializer;
     public static FriendInitializer friendInitializer;
     public static HudComponentInitializer hudComponentInitializer;
+    public static CustomFontRenderer customFontRenderer;
 
     public void init() {
         Display.setTitle("Skidd.ed \u2764 1.0");
@@ -28,6 +32,7 @@ public class Skidded {
         moduleInitializer = new ModuleInitializer();
         friendInitializer = new FriendInitializer();
         hudComponentInitializer = new HudComponentInitializer();
+        customFontRenderer = new CustomFontRenderer(new Font("Arial", Font.PLAIN, 19), true, false);
         configInitializer = new ConfigInitializer();
         configInitializer.init();
     }

@@ -5,6 +5,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import skidd.ed.Skidded;
 import skidd.ed.clickgui.settingbutton.Button;
 import skidd.ed.modules.core.ClickGui;
+import skidd.ed.modules.core.CustomFont;
 import skidd.ed.settings.Setting;
 import skidd.ed.settings.impl.IntegerSetting;
 import skidd.ed.utils.RenderUtil;
@@ -36,7 +37,11 @@ public class IntegerButton extends Button {
         }
         if (isInside(mouseX, mouseY))
             RenderUtil.drawRect(x, y, x + width, y + height, new Color(0, 0, 0, 100).getRGB());
-        Skidded.mc.fontRenderer.drawStringWithShadow(integerSetting.getName() + " " + ChatFormatting.GRAY + integerSetting.getValue(), x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        if(CustomFont.INSTANCE.isEnabled()){
+            Skidded.customFontRenderer.drawStringWithShadow(integerSetting.getName() + " " + ChatFormatting.GRAY + integerSetting.getValue(), x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        }else {
+            Skidded.mc.fontRenderer.drawStringWithShadow(integerSetting.getName() + " " + ChatFormatting.GRAY + integerSetting.getValue(), x + 2, y + (height / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+        }
     }
 
     void dragSlider(int mouseX, int mouseY) {

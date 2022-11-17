@@ -4,6 +4,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import skidd.ed.Skidded;
 import skidd.ed.clickgui.settingbutton.Button;
 import skidd.ed.modules.core.ClickGui;
+import skidd.ed.modules.core.CustomFont;
 import skidd.ed.settings.Setting;
 import skidd.ed.settings.impl.ColorSetting;
 import skidd.ed.utils.RenderUtil;
@@ -59,15 +60,27 @@ public class ColorButton extends Button {
         RenderUtil.drawRect(x - 2, y, x + width + 2, y + height, ClickGui.getInstance().backgroundColor.getColor().getRGB());
         if (isInsideButtonOnly(mouseX, mouseY))
             RenderUtil.drawRect(x, y, x + width, y + 10, new Color(0, 0, 0, 100).getRGB());
-        Skidded.mc.fontRenderer.drawStringWithShadow(colorSetting.getName(), x + 2, y, -1);
+        if(CustomFont.INSTANCE.isEnabled()){
+            Skidded.customFontRenderer.drawStringWithShadow(colorSetting.getName(), x + 2, y, -1);
+        }else {
+            Skidded.mc.fontRenderer.drawStringWithShadow(colorSetting.getName(), x + 2, y, -1);
+        }
         String hex = String.format("#%06x", colorSetting.getColor().getRGB() & 0xFFFFFF);
         if (colorSetting.isOpen()) {
             drawPicker(colorSetting, x + 1, y + 12, x + 111, y + 12, x + 1, y + 94, mouseX, mouseY);
             RenderUtil.drawRect(x + 1, y + 107, x + 109, y + (colorSetting.isSelected() ? 130 : 120), ClickGui.getInstance().backgroundColor.getColor().getRGB());
-            Skidded.mc.fontRenderer.drawStringWithShadow(colorSetting.isSelected() ? ChatFormatting.UNDERLINE + hex : hex, x + 109 / 2f - (Skidded.mc.fontRenderer.getStringWidth(hex) / 2f), y + 109 + (11 / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
-            if (colorSetting.isSelected()) {
-                Skidded.mc.fontRenderer.drawStringWithShadow(isInsideCopy(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Copy" : "Copy", (x + ((107) / 8f) * 2) - (Skidded.mc.fontRenderer.getStringWidth("Copy") / 2f), y + 120, -1);
-                Skidded.mc.fontRenderer.drawStringWithShadow(isInsidePaste(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Paste" : "Paste", (x + ((107) / 8f) * 6) - (Skidded.mc.fontRenderer.getStringWidth("Paste") / 2f), y + 120, -1);
+            if(CustomFont.INSTANCE.isEnabled()){
+                Skidded.customFontRenderer.drawStringWithShadow(colorSetting.isSelected() ? ChatFormatting.UNDERLINE + hex : hex, x + 109 / 2f - (Skidded.mc.fontRenderer.getStringWidth(hex) / 2f), y + 109 + (11 / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+                if(colorSetting.isSelected()){
+                    Skidded.customFontRenderer.drawStringWithShadow(isInsideCopy(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Copy" : "Copy", (x + ((107) / 8f) * 2) - (Skidded.mc.fontRenderer.getStringWidth("Copy") / 2f), y + 120, -1);
+                    Skidded.customFontRenderer.drawStringWithShadow(isInsidePaste(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Paste" : "Paste", (x + ((107) / 8f) * 6) - (Skidded.mc.fontRenderer.getStringWidth("Paste") / 2f), y + 120, -1);
+                }
+            }else {
+                Skidded.mc.fontRenderer.drawStringWithShadow(colorSetting.isSelected() ? ChatFormatting.UNDERLINE + hex : hex, x + 109 / 2f - (Skidded.mc.fontRenderer.getStringWidth(hex) / 2f), y + 109 + (11 / 2f) - (Skidded.mc.fontRenderer.FONT_HEIGHT / 2f), -1);
+                if (colorSetting.isSelected()) {
+                    Skidded.mc.fontRenderer.drawStringWithShadow(isInsideCopy(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Copy" : "Copy", (x + ((107) / 8f) * 2) - (Skidded.mc.fontRenderer.getStringWidth("Copy") / 2f), y + 120, -1);
+                    Skidded.mc.fontRenderer.drawStringWithShadow(isInsidePaste(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Paste" : "Paste", (x + ((107) / 8f) * 6) - (Skidded.mc.fontRenderer.getStringWidth("Paste") / 2f), y + 120, -1);
+                }
             }
             colorSetting.setColor(finalColor);
         }

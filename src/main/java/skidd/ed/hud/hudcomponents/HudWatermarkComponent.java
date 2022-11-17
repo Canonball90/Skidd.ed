@@ -3,6 +3,7 @@ package skidd.ed.hud.hudcomponents;
 import skidd.ed.Skidded;
 import skidd.ed.hud.HudModule;
 import skidd.ed.modules.core.ClickGui;
+import skidd.ed.modules.core.CustomFont;
 import skidd.ed.utils.RenderUtil;
 
 import java.awt.*;
@@ -39,7 +40,11 @@ public class HudWatermarkComponent extends HudModule {
     }
 
     public void drawText() {
-        Skidded.mc.fontRenderer.drawStringWithShadow("Skidd.ed \u2764 1.0", renderX, renderY, ClickGui.getInstance().color.getColor().getRGB());
+        if(CustomFont.INSTANCE.isEnabled()){
+            Skidded.customFontRenderer.drawString("Skidd.ed \u2764 1.0", renderX, renderY, ClickGui.getInstance().color.getColor().getRGB());
+        }else {
+            Skidded.mc.fontRenderer.drawStringWithShadow("Skidd.ed \u2764 1.0", renderX, renderY, ClickGui.getInstance().color.getColor().getRGB());
+        }
     }
 
     public boolean isInsideDragField(int mouseX, int mouseY) {
