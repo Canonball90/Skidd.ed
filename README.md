@@ -2,4 +2,4 @@
 
 ## About:
 Skidd.ed is a free and open source hack client that uses prestige base as a base (https://github.com/RealzPrestige/PrestigeBase-Public-Continuation) and we try to add as
-much modules as possible into one client cause using 15 clients is annoying.
+much modules as possible into one client cause using 15 clients is annoying asf.
