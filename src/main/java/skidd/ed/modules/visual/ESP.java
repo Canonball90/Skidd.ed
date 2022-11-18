@@ -3,9 +3,9 @@ package skidd.ed.modules.visual;
 import skidd.ed.Skidded;
 import skidd.ed.modules.Module;
 import skidd.ed.modules.ModuleInfo;
-import skidd.ed.settings.impl.BooleanSetting;
-import skidd.ed.settings.impl.DoubleSetting;
-import skidd.ed.settings.impl.EnumSetting;
+import skidd.ed.modules.core.CustomFont;
+import skidd.ed.settings.impl.*;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
-import skidd.ed.settings.impl.FloatSetting;
 
 import java.util.Arrays;
 
@@ -42,6 +41,9 @@ public class ESP extends Module {
         BooleanSetting showItem = new BooleanSetting("Show current item", true, this);
         BooleanSetting local = new BooleanSetting("Local", false, this);
         FloatSetting alpha = new FloatSetting("3DAlpha", 0.7f, 0.0f, 1.0f, this);
+        ColorSetting color = new ColorSetting("Color", new Color(255, 255, 255), this);
+        ColorSetting friendColor = new ColorSetting("Color", new Color(0, 255, 211), this);
+
 
     @Override
     public void onDisable() {
@@ -74,9 +76,9 @@ public class ESP extends Module {
                 GL11.glRotated((double)(-ESP.mc.getRenderManager().playerViewY), (double)0.0, (double)1.0, (double)0.0);
                 if (box.getValue()) {
                     if (Skidded.friendInitializer.isFriend(e.getName())) {
-                        GL11.glColor4d((double)30.0, (double)225.0, (double)47.0, (double)255.0);
+                        GL11.glColor4d(friendColor.getValue().getRed(),friendColor.getValue().getGreen(),friendColor.getValue().getBlue(),friendColor.getValue().getAlpha());
                     } else {
-                        GL11.glColor4d((double)0.8, (double)0.8, (double)0.8, (double)255.0);
+                        GL11.glColor4d(color.getValue().getRed(),color.getValue().getGreen(),color.getValue().getBlue(),color.getValue().getAlpha());
                     }
                     GL11.glBegin((int)3);
                     GL11.glVertex3d((double)0.55, (double)-0.2, (double)0.0);
@@ -123,19 +125,31 @@ public class ESP extends Module {
                 GL11.glScaled((double)-0.013f, (double)-0.013f, (double)-0.013f);
                 if (tag.getValue()) {
                     GL11.glEnable((int)3553);
-                    ESP.mc.fontRenderer.drawStringWithShadow(e.getName(), (float)(1 - ESP.mc.fontRenderer.getStringWidth(e.getName()) / 2), -170.0f, -1);
+                    if(CustomFont.INSTANCE.isEnabled()){
+                        Skidded.customFontRenderer.drawStringWithShadow(e.getName(), (float) (1 - ESP.mc.fontRenderer.getStringWidth(e.getName()) / 2), -170.0f, -1);
+                    }else {
+                        ESP.mc.fontRenderer.drawStringWithShadow(e.getName(), (float) (1 - ESP.mc.fontRenderer.getStringWidth(e.getName()) / 2), -170.0f, -1);
+                    }
                     GL11.glDisable((int)3553);
                 }
                 if (healthValue.getValue()) {
                     if(health.getValue()) {
                         GL11.glEnable((int) 3553);
-                        ESP.mc.fontRenderer.drawStringWithShadow(String.valueOf((int) (((EntityPlayer) e).getHealth() / ((EntityPlayer) e).getMaxHealth() * 100.0f)), (float) (-50 - ESP.mc.fontRenderer.getStringWidth(String.valueOf((int) (((EntityPlayer) e).getHealth() / ((EntityPlayer) e).getMaxHealth() * 100.0f)))), (float) ((int) ((double) (((EntityLivingBase) e).getHealth() / ((EntityLivingBase) e).getMaxHealth()) * ((double) e.height + 0.2))), -1);
+                        if(CustomFont.INSTANCE.isEnabled()){
+                            Skidded.customFontRenderer.drawStringWithShadow(String.valueOf((int) (((EntityPlayer) e).getHealth() / ((EntityPlayer) e).getMaxHealth() * 100.0f)), (float) (-50 - ESP.mc.fontRenderer.getStringWidth(String.valueOf((int) (((EntityPlayer) e).getHealth() / ((EntityPlayer) e).getMaxHealth() * 100.0f)))), (float) ((int) ((double) (((EntityLivingBase) e).getHealth() / ((EntityLivingBase) e).getMaxHealth()) * ((double) e.height + 0.2))), -1);
+                        }else {
+                            ESP.mc.fontRenderer.drawStringWithShadow(String.valueOf((int) (((EntityPlayer) e).getHealth() / ((EntityPlayer) e).getMaxHealth() * 100.0f)), (float) (-50 - ESP.mc.fontRenderer.getStringWidth(String.valueOf((int) (((EntityPlayer) e).getHealth() / ((EntityPlayer) e).getMaxHealth() * 100.0f)))), (float) ((int) ((double) (((EntityLivingBase) e).getHealth() / ((EntityLivingBase) e).getMaxHealth()) * ((double) e.height + 0.2))), -1);
+                        }
                         GL11.glDisable((int) 3553);
                     }
                 }
                 if (showItem.getValue() && !(((EntityPlayer)e).getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemBlock) && !(((EntityPlayer)e).getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemAir)) {
                     GL11.glEnable((int)3553);
-                    ESP.mc.fontRenderer.drawStringWithShadow(((EntityPlayer)e).getHeldItem(EnumHand.MAIN_HAND).getDisplayName(), (float)(1 - ESP.mc.fontRenderer.getStringWidth(((EntityPlayer)e).getHeldItem(EnumHand.MAIN_HAND).getDisplayName()) / 2), 20.0f, -1);
+                    if(CustomFont.INSTANCE.isEnabled()){
+                        Skidded.customFontRenderer.drawStringWithShadow(((EntityPlayer) e).getHeldItem(EnumHand.MAIN_HAND).getDisplayName(), (float) (1 - ESP.mc.fontRenderer.getStringWidth(((EntityPlayer) e).getHeldItem(EnumHand.MAIN_HAND).getDisplayName()) / 2), 20.0f, -1);
+                    }else {
+                        ESP.mc.fontRenderer.drawStringWithShadow(((EntityPlayer) e).getHeldItem(EnumHand.MAIN_HAND).getDisplayName(), (float) (1 - ESP.mc.fontRenderer.getStringWidth(((EntityPlayer) e).getHeldItem(EnumHand.MAIN_HAND).getDisplayName()) / 2), 20.0f, -1);
+                    }
                     GL11.glDisable((int)3553);
                 }
                 GL11.glEnable((int)2929);

@@ -5,6 +5,7 @@ import skidd.ed.hud.HudComponentInitializer;
 import skidd.ed.initializers.ConfigInitializer;
 import skidd.ed.initializers.FriendInitializer;
 import skidd.ed.modules.ModuleInitializer;
+import skidd.ed.modules.core.CustomFont;
 import skidd.ed.settings.SettingInitializer;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.Display;
@@ -32,7 +33,7 @@ public class Skidded {
         moduleInitializer = new ModuleInitializer();
         friendInitializer = new FriendInitializer();
         hudComponentInitializer = new HudComponentInitializer();
-        customFontRenderer = new CustomFontRenderer(new Font("Arial", Font.PLAIN, 19), true, false);
+        customFontRenderer = new CustomFontRenderer(new Font("Arial", Font.PLAIN, 19), CustomFont.INSTANCE.antiAlias.getValue(), CustomFont.INSTANCE.fractional.getValue());
         configInitializer = new ConfigInitializer();
         configInitializer.init();
     }
